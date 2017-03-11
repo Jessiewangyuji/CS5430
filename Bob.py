@@ -4,8 +4,8 @@ import os
 import sys
 import aes_mac_functions
 
-HMAC_TAG_LENGTH = 64
-IV_LENGTH = 32
+MAX_BYTES_TO_READ = 5000
+MAX_TIME_DIFF = 1000
 
 
 def establish_session(message):
@@ -30,7 +30,7 @@ def establish_session(message):
         print "message intended for ", intended, ". Abort"
         exit()
     localtime = time.ctime
-    if localtime - time.ctime(time) > 1000:
+    if localtime - time.ctime(time) > MAX_TIME_DIFF:
         print "time diff, abort"
 
 
@@ -65,27 +65,26 @@ s.listen(5)
 (clientsocket, address) = s.accept()
 
 while action == "y":
-    raw_message = clientsocket.recv(5000)
+    raw_message = clientsocket.recv(MAX_BYTES_TO_READ)
 
     if config == 0:
         print(raw_message)
+
     elif config == 1:
-        iv = raw_message[:IV_LENGTH]
-        message = raw_message[IV_LENGTH:]
+        iv,message = get_iv_and_message(raw_message)
         print(dec(message,enc_key,iv))
+
     elif config == 2:
-        tag = raw_message[:HMAC_TAG_LENGTH]
-        message = raw_message[HMAC_TAG_LENGTH:]
+        tag,message = get_tag_and_message(raw_message)
         if(verify_mac(message,hmac_key,tag)):
             print(message)
         else:
             print("HMAC tag did not match")
+
     else:
-        tag = raw_message[:HMAC_TAG_LENGTH]
-        mac_message = [HMAC_TAG_LENGTH:]
-        if(verify_mac(mac_message,hmac_key,tag)):
-            iv = mac_message[:IV_LENGTH]
-            message = mac_message[IV_LENGTH:]
+        tag,encrypted_message = get_tag_and_message(raw_message)
+        if(verify_mac(encrypted_message,hmac_key,tag)):
+            iv,message = get_iv_and_message(encrypted_message)
             print(dec(message,enc_key,iv))
         else:
             print("HMAC tag did not match")

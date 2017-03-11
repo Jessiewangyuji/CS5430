@@ -1,48 +1,60 @@
 import subprocess
 
+HMAC_TAG_LENGTH = 64
+IV_LENGTH = 32
 
 def enc(message,key,iv):
 	echo_program = subprocess.Popen(('echo',message), stdout=subprocess.PIPE)
-	openssl_output = subprocess.check_output(("openssl", "enc", "-aes-256-cbc", "-base64", "-K", key, "-iv", iv), stdin=echo_program.stdout).strip()
-	return openssl_output
+	encrypted_message = subprocess.check_output(("openssl", "enc", "-aes-256-cbc", "-base64", "-K", key, "-iv", iv), stdin=echo_program.stdout).strip()
+	return encrypted_message
 
 def mac(message,key):
 	echo_program = subprocess.Popen(('echo', message), stdout=subprocess.PIPE)
-	openssl_output = subprocess.check_output(("openssl", "sha256", "-hmac", key), stdin=echo_program.stdout)[9:].strip()
-	return openssl_output
+	tag = subprocess.check_output(("openssl", "sha256", "-hmac", key), stdin=echo_program.stdout)[9:].strip()
+	return tag
 
 def enc_mac(message,enc_key,mac_key,iv):
 	encrypted_message = enc(message,enc_key,iv)
-	tag = mac(iv + encrypted_message,mac_key)
-	return encrypted_message,tag
+	final_message = iv+encrypted_message
+	tag = mac(final_message,mac_key)
+	return tag,final_message
 
 
 def dec(message,key,iv):
 	echo_program = subprocess.Popen(('echo',message), stdout=subprocess.PIPE)
-	openssl_output = subprocess.check_output(("openssl", "enc", "-d", "-aes-256-cbc", "-base64", "-K", key, "-iv", iv), stdin=echo_program.stdout).strip()
-	return openssl_output
+	decrypted_message = subprocess.check_output(("openssl", "enc", "-d", "-aes-256-cbc", "-base64", "-K", key, "-iv", iv), stdin=echo_program.stdout).strip()
+	return decrypted_message
 
 
 def verify_mac(message,key,tag):
 	return tag == mac(message,key)
 
 
+#returns a tuple: (iv, message)
+def get_iv_and_message(raw_message):
+	return raw_message[:IV_LENGTH], raw_message[IV_LENGTH:]
+
+#returns a tupe: (tag, message)
+def get_tag_and_message(raw_message):
+    return raw_message[:HMAC_TAG_LENGTH], raw_message[HMAC_TAG_LENGTH:]
+
 
 
 # message = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum'
-# message = 'evin'
 
 # key = '12345'
-# iv = '98f093'
+# iv = '19584938493829384728382938482732'
 
-# encrypted = enc(message,key,iv)
-# print(encrypted)
-# decrypted = dec(encrypted,key,iv)
-# print(decrypted)
-
-# tag = mac(message,key)
+# tag,encrypted = enc_mac(message,key,key,iv)
+# raw_message = tag + encrypted
+# tag,message = get_tag_and_message(raw_message)
 # print(verify_mac(message,key,tag))
+# iv,message = get_iv_and_message(message)
+# print(dec(message,key,iv))
 
+
+# iv,message = get_iv_and_message(message)
+# print(dec(message,key,iv))
 
 
 # echo_program = subprocess.Popen(('echo', message), stdout=subprocess.PIPE)
