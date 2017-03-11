@@ -1,7 +1,3 @@
-import socket
-import time
-import os
-import sys
 import subprocess
 
 
@@ -33,17 +29,19 @@ def verify_mac(message,key,tag):
 
 
 
-message = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum'
-key = '12345'
-iv = '98f093'
+# message = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum'
+# message = 'evin'
 
-encrypted = enc(message,key,iv)
-print(encrypted)
-decrypted = dec(encrypted,key,iv)
-print(decrypted)
+# key = '12345'
+# iv = '98f093'
 
-tag = mac(message,key)
-print(verify_mac(message,key,tag))
+# encrypted = enc(message,key,iv)
+# print(encrypted)
+# decrypted = dec(encrypted,key,iv)
+# print(decrypted)
+
+# tag = mac(message,key)
+# print(verify_mac(message,key,tag))
 
 
 
