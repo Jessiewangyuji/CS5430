@@ -3,8 +3,39 @@ import time
 import os
 import sys
 
+
+def establish_session(message):
+    print message
+    with open("bob/session_cipher.txt", "w+") as file:
+        file.write(message.strip())
+        file.close()
+    
+    os.system("openssl rsautl -decrypt -inkey bob/private.pem -in bob/session_cipher.txt -out bob/decrypted_session.txt")
+
+    with open("bob/decrypted_session.txt", "r") as file:
+        content = file.readlines()
+        file.close()
+    content = [x.strip() for x in content]
+    print content[0]
+    intended = content[0]
+    time = content[1]
+    kAB = content[2]
+
+    print intended, time, kAB
+    if intended != "B":
+        print "message intended for ", intended, ". Abort"
+        exit()
+    localtime = time.ctime
+    if localtime - time.ctime(time) > 1000:
+        print "time diff, abort"
+
+
+
+
 argv = sys.argv
 config = argv[1]
+
+session_established = False
 
 if config == "no-cryptography":
     config = 0
@@ -32,7 +63,8 @@ if config == 0:
     while action == "y":
         message = clientsocket.recv(5000)
         print message
-
+        if not session_established:
+            establish_session(message)
         action = raw_input("Continue?(y/n)")
         if action == "n":
             exit()

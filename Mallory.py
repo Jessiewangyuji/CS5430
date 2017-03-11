@@ -5,7 +5,7 @@ import sys
 
 def sendmsg(socket, message, host, port):
     socket.connect((receivehost, receiveport))
-    socket.send(message.encode('utf-8'))
+    socket.send(message)
     socket.close()
 
 def replay():
