@@ -4,35 +4,35 @@ HMAC_TAG_LENGTH = 64
 IV_LENGTH = 32
 
 def enc(message,key,iv):
-	echo_program = subprocess.Popen(('echo',message), stdout=subprocess.PIPE)
-	encrypted_message = subprocess.check_output(("openssl", "enc", "-aes-256-cbc", "-base64", "-K", key, "-iv", iv), stdin=echo_program.stdout).strip()
-	return encrypted_message
+    echo_program = subprocess.Popen(('echo',message), stdout=subprocess.PIPE)
+    encrypted_message = subprocess.check_output(("openssl", "enc", "-aes-256-cbc", "-base64", "-K", key, "-iv", iv), stdin=echo_program.stdout).strip()
+    return encrypted_message
 
 def mac(message,key):
-	echo_program = subprocess.Popen(('echo', message), stdout=subprocess.PIPE)
-	tag = subprocess.check_output(("openssl", "sha256", "-hmac", key), stdin=echo_program.stdout)[9:].strip()
-	return tag
+    echo_program = subprocess.Popen(('echo', message), stdout=subprocess.PIPE)
+    tag = subprocess.check_output(("openssl", "sha256", "-hmac", key), stdin=echo_program.stdout)[9:].strip()
+    return tag
 
 def enc_mac(message,enc_key,mac_key,iv):
-	encrypted_message = enc(message,enc_key,iv)
-	final_message = iv+encrypted_message
-	tag = mac(final_message,mac_key)
-	return tag,final_message
+    encrypted_message = enc(message,enc_key,iv)
+    final_message = iv+encrypted_message
+    tag = mac(final_message,mac_key)
+    return tag,final_message
 
 
 def dec(message,key,iv):
-	echo_program = subprocess.Popen(('echo',message), stdout=subprocess.PIPE)
-	decrypted_message = subprocess.check_output(("openssl", "enc", "-d", "-aes-256-cbc", "-base64", "-K", key, "-iv", iv), stdin=echo_program.stdout).strip()
-	return decrypted_message
+    echo_program = subprocess.Popen(('echo',message), stdout=subprocess.PIPE)
+    decrypted_message = subprocess.check_output(("openssl", "enc", "-d", "-aes-256-cbc", "-base64", "-K", key, "-iv", iv), stdin=echo_program.stdout).strip()
+    return decrypted_message
 
 
 def verify_mac(message,key,tag):
-	return tag == mac(message,key)
+    return tag == mac(message,key)
 
 
 #returns a tuple: (iv, message)
 def get_iv_and_message(raw_message):
-	return raw_message[:IV_LENGTH], raw_message[IV_LENGTH:]
+    return raw_message[:IV_LENGTH], raw_message[IV_LENGTH:]
 
 #returns a tupe: (tag, message)
 def get_tag_and_message(raw_message):

@@ -75,22 +75,23 @@ start_session(s, receiver, receivehost, receiveport)
 
 while action == "y":
     message = raw_input("What's the message you want to send?")
+    
     if config == 0:
-		final_message = message
+        final_message = message
 
-	elif config == 1:
-		encrypted_message = enc(message,key,iv)
-		final_message = iv + encrypted_message
+    elif config == 1:
+        encrypted_message = enc(message,key,iv)
+        final_message = iv + encrypted_message
 
-	elif config == 2:
-		tag = mac(message,key)
-		final_message = tag + message
+    elif config == 2:
+        tag = mac(message,key)
+        final_message = tag + message
 
-	elif config == 3:
-		tag, encrypted_message = enc_mac(message,key,key,iv)
-		final_message = tag + encrypted_message
+    elif config == 3:
+        tag, encrypted_message = enc_mac(message,key,key,iv)
+        final_message = tag + encrypted_message
 
-	sendmsg(s, final_message, receivehost, receiveport)
+    sendmsg(s, final_message, receivehost, receiveport)
 
     action = raw_input("Continue? (y/n)")
 
