@@ -28,7 +28,19 @@ def start_session(socket, receiver, receivehost, receiveport):
 
     os.system("openssl rsautl -encrypt -inkey alice/b_public.pem -pubin -in alice/session_key.txt -out alice/session_cipher.txt")
 
-    os.system("openssl rsautl -sign -in alice/session_cipher.txt -inkey alice/private.pem -out alice/sig")
+    with open("alice/session_cipher.txt", "r") as file:
+        sign = file.read()
+        file.close()
+
+    sign = receiver + "\n" + tA + "\n" + sign
+
+    print "sign: ", sign
+
+    with open("alice/sign.txt", "w+") as file:
+        file.write(sign)
+        file.close()
+
+    os.system("openssl rsautl -sign -in alice/sign.txt -inkey alice/private.pem -out alice/sig")
 
 
     with open("alice/session_cipher.txt", "r") as file:

@@ -18,7 +18,7 @@ def establish_session(message):
     content = [x.strip() for x in content]
     print content[0]
     intended = content[0]
-    time = content[1]
+    sendertime = content[1]
     kAB = content[2]
 
     print intended, time, kAB
@@ -26,7 +26,7 @@ def establish_session(message):
         print "message intended for ", intended, ". Abort"
         exit()
     localtime = time.ctime
-    if localtime - time.ctime(time) > 1000:
+    if localtime - time.ctime(sendertime) > 1000:
         print "time diff, abort"
 
 
