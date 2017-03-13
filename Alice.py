@@ -2,6 +2,7 @@ import socket
 import time
 import os
 import sys
+import aes_mac_functions
 
 key = ""
 iv = ""
@@ -68,31 +69,42 @@ elif config == "Mac-only":
 elif config == "Enc-then-Mac":
     config = 3
 else:
-    print "Python Alice.py <configuration> <host> <port>"
+    print "python Alice.py <configuration> <host> <port>"
     print "configuration: no-cryptography, Enc-only, Mac-only, Enc-then-Mac"
     exit()
 
 host = argv[2]
 port = int(argv[3])
 
-if config == 0:
-    action = "y"
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    receiver = raw_input("Who do you want to communicate with?")
-    receivehost = raw_input("What's the host address you want to communicate with?")
-    receiveport = int(raw_input("What's the port number you want to communicate with?"))
-    s.connect((receivehost, receiveport))
-    start_session(s, receiver, receivehost, receiveport)
-    while action == "y":
-        message = raw_input("What's the message you want to send?")
-        sendmsg(s, message, receivehost, receiveport)
-        action = raw_input("Continue? (y/n)")
-    s.close()
-elif config == 1:
-    enc(host, port)
-elif config == 2:
-    mac(host, port)
-else:
-    enc_mac(role, host, port)
+action = "y"
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+receiver = raw_input("Who do you want to communicate with?")
+receivehost = raw_input("What's the host address you want to communicate with?")
+receiveport = int(raw_input("What's the port number you want to communicate with?"))
+s.connect((receivehost, receiveport))
+start_session(s, receiver, receivehost, receiveport)
 
 
+while action == "y":
+    message = raw_input("What's the message you want to send?")
+    
+    if config == 0:
+        final_message = message
+
+    elif config == 1:
+        encrypted_message = enc(message,key,iv)
+        final_message = iv + encrypted_message
+
+    elif config == 2:
+        tag = mac(message,key)
+        final_message = tag + message
+
+    elif config == 3:
+        tag, encrypted_message = enc_mac(message,key,key,iv)
+        final_message = tag + encrypted_message
+
+    sendmsg(s, final_message, receivehost, receiveport)
+
+    action = raw_input("Continue? (y/n)")
+
+s.close()
