@@ -3,38 +3,40 @@ import time
 import os
 import sys
 import aes_mac_functions
+import key_transport
+import datetime
 
 MAX_BYTES_TO_READ = 5000
-MAX_TIME_DIFF = 1000
+MAX_TIME_DIFF = 120
 
 
-def establish_session(message):
-    print message
-    with open("bob/session_cipher.txt", "w+") as file:
-        file.write(message.strip())
-        file.close()
+#from here: http://stackoverflow.com/questions/13530338/python-comparing-two-times-and-returning-in-minutes
+#and here: http://stackoverflow.com/questions/21378977/compare-two-timestamps-in-python
+def timeDiff(time1,time2):
+    t1 = datetime.datetime.strptime(time1, "%a %b %d %H:%M:%S %Y")
+    t2 = datetime.datetime.strptime(time2, "%a %b %d %H:%M:%S %Y")
+    return t1 - t2
+
+def establish_session(digital_signature_and_message):
+    message = verify_transport_signature(digital_signature_and_message)
+
+    if not message:
+        return None
+
+    name = message[0]
+    time_sent = message[1]
+    session_cipher = message[2]
+
+    if name != "Bob":
+        print("incorrect recipient. Abort!")
+        return None
+    if timeDiff(time.ctime(),time_sent).seconds > MAX_TIME_DIFF:
+        print("message too old")
+        return None
+
+    write_file("bob/session_cipher.txt",session_cipher)
     
-    os.system("openssl rsautl -decrypt -inkey bob/private.pem -in bob/session_cipher.txt -out bob/decrypted_session.txt")
-
-    with open("bob/decrypted_session.txt", "r") as file:
-        content = file.readlines()
-        file.close()
-    content = [x.strip() for x in content]
-    print content[0]
-    intended = content[0]
-    sendertime = content[1]
-    kAB = content[2]
-
-    print intended, time, kAB
-    if intended != "B":
-        print "message intended for ", intended, ". Abort"
-        exit()
-    localtime = time.ctime
-
-#if localtime - time.ctime(time) > MAX_TIME_DIFF:
-#print "time diff, abort"
-
-
+    os.system("openssl rsautl -decrypt -oaep -inkey bob/private.pem -in bob/session_cipher.txt -out bob/session_key.txt")
 
 
 argv = sys.argv
@@ -71,8 +73,8 @@ while action == "y":
     raw_message = clientsocket.recv(MAX_BYTES_TO_READ)
     
     if not session_established:
-        establish_session(raw_message)
-        session_established = True
+        if establish_session(raw_message):
+            session_established = True
     else:
         if config == 0:
             print(raw_message)
