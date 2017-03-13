@@ -31,8 +31,8 @@ def establish_session(message):
         exit()
     localtime = time.ctime
 
-    if localtime - time.ctime(time) > MAX_TIME_DIFF:
-	print "time diff, abort"
+#if localtime - time.ctime(time) > MAX_TIME_DIFF:
+#print "time diff, abort"
 
 
 
@@ -65,38 +65,43 @@ s.bind((host, port))
 s.listen(5)
 (clientsocket, address) = s.accept()
 
+
 while action == "y":
+    print "here"
     raw_message = clientsocket.recv(MAX_BYTES_TO_READ)
-
-    if config == 0:
-        print(raw_message)
-
-    elif config == 1:
-        iv,message = get_iv_and_message(raw_message)
-        print(dec(message,enc_key,iv))
-
-    elif config == 2:
-        tag,message = get_tag_and_message(raw_message)
-        if(verify_mac(message,hmac_key,tag)):
-            print(message)
-        else:
-            print("HMAC tag did not match")
-
-    else:
-        tag,encrypted_message = get_tag_and_message(raw_message)
-        if(verify_mac(encrypted_message,hmac_key,tag)):
-            iv,message = get_iv_and_message(encrypted_message)
-            print(dec(message,enc_key,iv))
-        else:
-            print("HMAC tag did not match")
-
-
+    
     if not session_established:
-        establish_session(message)
-    action = raw_input("Continue?(y/n)")
+        establish_session(raw_message)
+        session_established = True
+    else:
+        if config == 0:
+            print(raw_message)
+
+        elif config == 1:
+            iv,message = get_iv_and_message(raw_message)
+            print(dec(message,enc_key,iv))
+
+        elif config == 2:
+            tag,message = get_tag_and_message(raw_message)
+            if(verify_mac(message,hmac_key,tag)):
+                print(message)
+            else:
+                print("HMAC tag did not match. ABORT!")
+                exit()
+
+        else:
+            tag,encrypted_message = get_tag_and_message(raw_message)
+            if(verify_mac(encrypted_message,hmac_key,tag)):
+                iv,message = get_iv_and_message(encrypted_message)
+                print(dec(message,enc_key,iv))
+            else:
+                print("HMAC tag did not match. ABORT!")
+                exit()
+
+
     if action == "n":
         exit()
-
+    action = raw_input("Continue? (y/n)")
 
    
     

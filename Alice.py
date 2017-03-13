@@ -41,16 +41,16 @@ def start_session(socket, receiver, receivehost, receiveport):
         file.write(sign)
         file.close()
 
-    os.system("openssl rsautl -sign -in alice/sign.txt -inkey alice/private.pem -out alice/sig")
+#os.system("openssl rsautl -sign -in alice/sign.txt -inkey alice/private.pem -out alice/sig")
 
 
     with open("alice/session_cipher.txt", "r") as file:
         session_cipher = file.read().strip()
         file.close()
 
-    with open("alice/sig", "r") as file:
-        session_cipher = session_cipher + file.read().strip()
-        file.close()
+#with open("alice/sig", "r") as file:
+#        session_cipher = session_cipher + file.read().strip()
+#        file.close()
 
     sendmsg(socket, session_cipher, receivehost, receiveport)
 
