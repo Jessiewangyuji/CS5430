@@ -10,9 +10,13 @@ iv = ""
 
 def start_session(socket, receiver, receivehost, receiveport):
     
-    digital_signature_and_message = sign_session_key(receiver)
+    digital_signature_and_message, session_key = sign_session_key(receiver)
 
     sendmsg(socket, digital_signature_and_message, receivehost, receiveport)
+
+    #TODO
+    #enc_key = derive_key(session_key,"enc_key")
+    #mac_key = derive_key(session_key,"mac_key")
 
 
 def sendmsg(socket, message, host, port):

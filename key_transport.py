@@ -1,10 +1,8 @@
-import socket
 import time
 import os
 import sys
 import subprocess
 import pickle
-import datetime
 
 SHA256_LENGTH = 64
 
@@ -25,23 +23,9 @@ def write_file(filename,data):
 def sign_session_key(receiver):
     print "start_session"
 
-    # session_key_file = "/session_key.txt"
-    # receiver_public_file = "/b_public.pem"
-    # session_cipher_file = "/session_cipher.txt"
-    # message_file = "/message.txt"
-    # hashed_file = "/hashed.txt"
-    # sender_private_file = "/private.pem"
-    # signature_file = "sig"
-
     tA = time.ctime()
     os.system("openssl rand 64 -hex -out alice/session_key.txt")
-    with open("alice/session_key.txt", "r") as file:
-        session_key = file.read()
-        global key
-        key = session_key
-        file.close()
-
-    print(len(session_key))
+    session_key = read_file("alice/session_key.txt")
 
     os.system("openssl rsautl -oaep -encrypt -inkey alice/b_public.pem -pubin -in alice/session_key.txt -out alice/session_cipher.txt")
 
@@ -52,7 +36,6 @@ def sign_session_key(receiver):
     write_file("alice/message.txt",message)
 
     hashed = subprocess.check_output(("openssl", "dgst", "-sha256", "alice/message.txt"))[-SHA256_LENGTH-1:]
-    print(hashed)
 
     write_file("alice/hashed.txt",hashed)
 
@@ -60,7 +43,7 @@ def sign_session_key(receiver):
 
     digital_signature = read_file("alice/sig")
 
-    return pickle.dumps([digital_signature, message])
+    return pickle.dumps([digital_signature, message]), session_key
 
 
 
@@ -88,5 +71,7 @@ def verify_transport_signature(digital_signature_and_message):
 
 
 
-# digital_signature_and_message = sign_session_key("Bob")
+# digital_signature_and_message, session_key = sign_session_key("Bob")
 # message = verify_transport_signature(digital_signature_and_message)
+
+# print(session_key)
