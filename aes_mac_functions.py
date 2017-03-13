@@ -10,7 +10,7 @@ def enc(message,key,iv):
 
 def mac(message,key):
     echo_program = subprocess.Popen(('echo', message), stdout=subprocess.PIPE)
-    tag = subprocess.check_output(("openssl", "sha256", "-hmac", key), stdin=echo_program.stdout)[9:].strip()
+    tag = subprocess.check_output(("openssl", "sha256", "-hmac", key), stdin=echo_program.stdout)[-HMAC_TAG_LENGTH-1:].strip()
     return tag
 
 def enc_mac(message,enc_key,mac_key,iv):
@@ -43,6 +43,9 @@ def get_tag_and_message(raw_message):
 # message = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum'
 
 # key = '12345'
+
+# print(mac(message,key))
+
 # iv = '19584938493829384728382938482732'
 
 # tag,encrypted = enc_mac(message,key,key,iv)
