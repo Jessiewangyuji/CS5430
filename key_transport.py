@@ -69,8 +69,6 @@ def verify_transport_signature(digital_signature_and_message):
 
 
 
-
-
 # digital_signature_and_message, session_key = sign_session_key("Bob")
 # message = verify_transport_signature(digital_signature_and_message)
 

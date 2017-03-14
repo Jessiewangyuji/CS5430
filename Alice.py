@@ -7,6 +7,7 @@ from key_transport import *
 
 key = ""
 iv = ""
+messageNo = 0
 
 def start_session(socket, receiver, receivehost, receiveport):
     
@@ -52,7 +53,7 @@ start_session(s, receiver, receivehost, receiveport)
 
 while action == "y":
     message = raw_input("What's the message you want to send?")
-    
+    message = str(messageNo) + " " + message
     if config == 0:
         final_message = message
 
@@ -69,6 +70,10 @@ while action == "y":
         final_message = tag + encrypted_message
 
     sendmsg(s, final_message, receivehost, receiveport)
+    messageNo += 1
+    if messageNo == sys.maxint:
+        print "Message number exceeds max int. Start a new channel."
+        break
 
     action = raw_input("Continue? (y/n)")
 

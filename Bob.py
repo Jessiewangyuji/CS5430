@@ -14,7 +14,9 @@ MAX_TIME_DIFF = 120
 #and here: http://stackoverflow.com/questions/21378977/compare-two-timestamps-in-python
 def timeDiff(time1,time2):
     t1 = datetime.datetime.strptime(time1, "%a %b %d %H:%M:%S %Y")
+    print t1
     t2 = datetime.datetime.strptime(time2, "%a %b %d %H:%M:%S %Y")
+    print t2
     return t1 - t2
 
 def establish_session(digital_signature_and_message):
@@ -45,7 +47,7 @@ argv = sys.argv
 config = argv[1]
 
 session_established = False
-
+messageNo = 0
 if config == "no-cryptography":
     config = 0
 elif config == "Enc-only":
@@ -75,13 +77,17 @@ while action == "y":
     if not session_established:
         if establish_session(raw_message):
             session_established = True
+            continue
     else:
-        if config == 0:
+	if config == 0:
             print(raw_message)
+            receivedNo = raw_message.split(" ")[0]
 
         elif config == 1:
             iv,message = get_iv_and_message(raw_message)
-            print(dec(message,enc_key,iv))
+            dec_message = dec(message,enc_key,iv)
+            receivedNo = dec_message.split(" ")[0]
+            print dec_message
 
         elif config == 2:
             tag,message = get_tag_and_message(raw_message)
@@ -90,16 +96,23 @@ while action == "y":
             else:
                 print("HMAC tag did not match. ABORT!")
                 exit()
+            receivedNo = message.split(" ")[0]
 
         else:
             tag,encrypted_message = get_tag_and_message(raw_message)
             if(verify_mac(encrypted_message,hmac_key,tag)):
                 iv,message = get_iv_and_message(encrypted_message)
-                print(dec(message,enc_key,iv))
+                dec_message = dec(message,enc_key,iv)
             else:
                 print("HMAC tag did not match. ABORT!")
                 exit()
-
+            receivedNo = dec_message.split(" ")[0]
+                
+        if int(receivedNo) != messageNo:
+            print "Message number mismatch. Possible Replay Attack! Abort"
+            exit()
+        else:
+            messageNo += 1
 
     if action == "n":
         exit()
