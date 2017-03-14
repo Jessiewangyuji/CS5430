@@ -44,8 +44,8 @@ def establish_session(digital_signature_and_message):
 
     session_key = read_file("bob/session_key.txt")
 
-    enc_key = derive_key(session_key,"enc_key",IV_LENGTH)
-    mac_key = derive_key(session_key,"mac_key",IV_LENGTH)
+    enc_key = derive_key(session_key,"enc_key")
+    mac_key = derive_key(session_key,"mac_key")
 
     return True
 

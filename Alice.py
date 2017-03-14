@@ -16,8 +16,8 @@ def start_session(socket, receiver, receivehost, receiveport):
 
     sendmsg(socket, digital_signature_and_message, receivehost, receiveport)
 
-    enc_key = derive_key(session_key,"enc_key",IV_LENGTH)
-    mac_key = derive_key(session_key,"mac_key",IV_LENGTH)
+    enc_key = derive_key(session_key,"enc_key")
+    mac_key = derive_key(session_key,"mac_key")
 
 
 def sendmsg(socket, message, host, port):

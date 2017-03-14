@@ -44,13 +44,13 @@ def get_tag_and_message(raw_message):
 
 
 
-def derive_key(session_key,salt,length):
+def derive_key(session_key,salt):
 
     backend = default_backend()
 
     hkdf = HKDF(
         algorithm = hashes.SHA256(),
-        length = length,
+        length = 64,
         salt = salt,
         info = None,
         backend = backend
