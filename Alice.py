@@ -5,7 +5,8 @@ import sys
 from aes_mac_functions import *
 from key_transport import *
 
-key = ""
+enc_key = ""
+mac_key = ""
 iv = ""
 messageNo = 0
 
@@ -15,9 +16,8 @@ def start_session(socket, receiver, receivehost, receiveport):
 
     sendmsg(socket, digital_signature_and_message, receivehost, receiveport)
 
-    #TODO
-    #enc_key = derive_key(session_key,"enc_key")
-    #mac_key = derive_key(session_key,"mac_key")
+    enc_key = derive_key(session_key,"enc_key",IV_LENGTH)
+    mac_key = derive_key(session_key,"mac_key",IV_LENGTH)
 
 
 def sendmsg(socket, message, host, port):
@@ -54,19 +54,21 @@ start_session(s, receiver, receivehost, receiveport)
 while action == "y":
     message = raw_input("What's the message you want to send?")
     message = str(messageNo) + " " + message
+    iv = subprocess.check_output(("openssl", "rand", str(IV_LENGTH/2), "-hex")).strip()
+
     if config == 0:
         final_message = message
 
     elif config == 1:
-        encrypted_message = enc(message,key,iv)
+        encrypted_message = enc(message,enc_key,iv)
         final_message = iv + encrypted_message
 
     elif config == 2:
-        tag = mac(message,key)
+        tag = mac(message,mac_key)
         final_message = tag + message
 
     elif config == 3:
-        tag, encrypted_message = enc_mac(message,key,key,iv)
+        tag, encrypted_message = enc_mac(message,enc_key,mac_key,iv)
         final_message = tag + encrypted_message
 
     sendmsg(s, final_message, receivehost, receiveport)

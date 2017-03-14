@@ -1,4 +1,8 @@
 import subprocess
+import os
+from cryptography.hazmat.primitives import hashes
+from cryptography.hazmat.primitives.kdf.hkdf import HKDF 
+from cryptography.hazmat.backends import default_backend
 
 HMAC_TAG_LENGTH = 64
 IV_LENGTH = 32
@@ -37,6 +41,24 @@ def get_iv_and_message(raw_message):
 #returns a tupe: (tag, message)
 def get_tag_and_message(raw_message):
     return raw_message[:HMAC_TAG_LENGTH], raw_message[HMAC_TAG_LENGTH:]
+
+
+
+def derive_key(session_key,salt,length):
+
+    backend = default_backend()
+
+    hkdf = HKDF(
+        algorithm = hashes.SHA256(),
+        length = length,
+        salt = salt,
+        info = None,
+        backend = backend
+        )
+
+    return hkdf.derive(session_key)
+
+
 
 
 

@@ -9,6 +9,8 @@ import datetime
 MAX_BYTES_TO_READ = 5000
 MAX_TIME_DIFF = 120
 
+enc_key = ""
+mac_key = ""
 
 #from here: http://stackoverflow.com/questions/13530338/python-comparing-two-times-and-returning-in-minutes
 #and here: http://stackoverflow.com/questions/21378977/compare-two-timestamps-in-python
@@ -23,7 +25,7 @@ def establish_session(digital_signature_and_message):
     message = verify_transport_signature(digital_signature_and_message)
 
     if not message:
-        return None
+        return False
 
     name = message[0]
     time_sent = message[1]
@@ -31,14 +33,19 @@ def establish_session(digital_signature_and_message):
 
     if name != "Bob":
         print("incorrect recipient. Abort!")
-        return None
+        return False
     if timeDiff(time.ctime(),time_sent).seconds > MAX_TIME_DIFF:
         print("message too old")
-        return None
+        return False
 
     write_file("bob/session_cipher.txt",session_cipher)
     
     os.system("openssl rsautl -decrypt -oaep -inkey bob/private.pem -in bob/session_cipher.txt -out bob/session_key.txt")
+
+    session_key = read_file("bob/session_key.txt")
+
+    enc_key = derive_key(session_key,"enc_key",IV_LENGTH)
+    mac_key = derive_key(session_key,"mac_key",IV_LENGTH)
 
     return True
 
@@ -91,7 +98,7 @@ while action == "y":
 
         elif config == 2:
             tag,message = get_tag_and_message(raw_message)
-            if(verify_mac(message,hmac_key,tag)):
+            if(verify_mac(message,mac_key,tag)):
                 print(message)
             else:
                 print("HMAC tag did not match. ABORT!")
@@ -100,9 +107,10 @@ while action == "y":
 
         else:
             tag,encrypted_message = get_tag_and_message(raw_message)
-            if(verify_mac(encrypted_message,hmac_key,tag)):
+            if(verify_mac(encrypted_message,mac_key,tag)):
                 iv,message = get_iv_and_message(encrypted_message)
                 dec_message = dec(message,enc_key,iv)
+                print(dec_message)
             else:
                 print("HMAC tag did not match. ABORT!")
                 exit()
