@@ -1,0 +1,36 @@
+Rationale
+Asymmetric Key Generation
+We used 2048 bits RSA to generate the private keys separately for Alice and Bob
+Then we generate the corresponding public keys.
+
+We are using openssl rsa with OAEP padding because it’s non-malleable, as mentioned in the writeup, so even if the Delov-Yao gets the message later on and just modifies some bits, the rsa decryption won’t be undetectable. 
+
+We choose des3 to encrypt the private key before outputting it because 
+We choose 2048 bits because 
+ 
+Secure channel 
+Protocol narration
+1. A->M: B, tA, Enc(A, kAB; K_B), Sign(B, tA, Enc(A, kAB; K_B); k_A)
+2. M: if M forwards the exact secure channel message to B
+	M->B: B, tA, Enc(A, kAB; K_B), Sign(B, tA, Enc(A, kAB; K_B); k_A)
+
+
+Part I No-cryptography 
+Protocol narration
+1.
+
+Use of cryptographic algorithms: None
+
+
+Part II Enc-only
+Protocol narration
+Use of cryptographic algorithms:
+
+Part III Mac-only
+Protocol narration
+Use of cryptographic algorithms:
+
+
+Part lV Enc-then-mac
+Protocol narration
+Use of cryptographic algorithms:
