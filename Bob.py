@@ -2,8 +2,8 @@ import socket
 import time
 import os
 import sys
-import aes_mac_functions
-import key_transport
+from aes_mac_functions import *
+from key_transport import *
 import datetime
 
 MAX_BYTES_TO_READ = 5000
@@ -38,6 +38,8 @@ def establish_session(digital_signature_and_message):
     
     os.system("openssl rsautl -decrypt -oaep -inkey bob/private.pem -in bob/session_cipher.txt -out bob/session_key.txt")
 
+    return True
+
 
 argv = sys.argv
 config = argv[1]
@@ -67,10 +69,8 @@ s.bind((host, port))
 s.listen(5)
 (clientsocket, address) = s.accept()
 
-
 while action == "y":
-    print "here"
-    raw_message = clientsocket.recv(MAX_BYTES_TO_READ)
+    raw_message = clientsocket.recv(5000)
     
     if not session_established:
         if establish_session(raw_message):
@@ -104,6 +104,7 @@ while action == "y":
     if action == "n":
         exit()
     action = raw_input("Continue? (y/n)")
+clientsocket.close()
 
    
     

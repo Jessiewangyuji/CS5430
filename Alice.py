@@ -2,8 +2,8 @@ import socket
 import time
 import os
 import sys
-import aes_mac_functions
-import key_transport
+from aes_mac_functions import *
+from key_transport import *
 
 key = ""
 iv = ""
