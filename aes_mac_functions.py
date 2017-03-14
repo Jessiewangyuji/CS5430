@@ -1,5 +1,6 @@
 import subprocess
 import os
+import pickle
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.hkdf import HKDF 
 from cryptography.hazmat.backends import default_backend
@@ -19,7 +20,7 @@ def mac(message,key):
 
 def enc_mac(message,enc_key,mac_key,iv):
     encrypted_message = enc(message,enc_key,iv)
-    final_message = iv+encrypted_message
+    final_message = pickle.dumps([iv,encrypted_message])
     tag = mac(final_message,mac_key)
     return tag,final_message
 

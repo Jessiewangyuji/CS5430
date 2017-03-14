@@ -4,6 +4,7 @@ import os
 import sys
 from aes_mac_functions import *
 from key_transport import *
+import pickle
 
 enc_key = ""
 mac_key = ""
@@ -61,15 +62,15 @@ while action == "y":
 
     elif config == 1:
         encrypted_message = enc(message,enc_key,iv)
-        final_message = iv + encrypted_message
+        final_message = pickle.dumps([iv,encrypted_message])
 
     elif config == 2:
         tag = mac(message,mac_key)
-        final_message = tag + message
+        final_message = pickle.dumps([tag,message])
 
     elif config == 3:
         tag, encrypted_message = enc_mac(message,enc_key,mac_key,iv)
-        final_message = tag + encrypted_message
+        final_message = pickle.dumps([tag,encrypted_message])
 
     sendmsg(s, final_message, receivehost, receiveport)
     messageNo += 1

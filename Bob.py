@@ -5,6 +5,7 @@ import sys
 from aes_mac_functions import *
 from key_transport import *
 import datetime
+import pickle
 
 MAX_BYTES_TO_READ = 5000
 MAX_TIME_DIFF = 120
@@ -91,13 +92,13 @@ while action == "y":
             receivedNo = raw_message.split(" ")[0]
 
         elif config == 1:
-            iv,message = get_iv_and_message(raw_message)
+            [iv,message] = pickle.loads(raw_message)
             dec_message = dec(message,enc_key,iv)
             receivedNo = dec_message.split(" ")[0]
             print dec_message
 
         elif config == 2:
-            tag,message = get_tag_and_message(raw_message)
+            [tag,message] = pickle.loads(raw_message)
             if(verify_mac(message,mac_key,tag)):
                 print(message)
             else:
@@ -106,9 +107,9 @@ while action == "y":
             receivedNo = message.split(" ")[0]
 
         else:
-            tag,encrypted_message = get_tag_and_message(raw_message)
+            [tag,encrypted_message] = pickle.loads(raw_message)
             if(verify_mac(encrypted_message,mac_key,tag)):
-                iv,message = get_iv_and_message(encrypted_message)
+                [iv,message] = pickle.loads(encrypted_message)
                 dec_message = dec(message,enc_key,iv)
                 print(dec_message)
             else:
