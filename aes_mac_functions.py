@@ -35,15 +35,6 @@ def verify_mac(message,key,tag):
     return tag == mac(message,key)
 
 
-#returns a tuple: (iv, message)
-def get_iv_and_message(raw_message):
-    return raw_message[:IV_LENGTH], raw_message[IV_LENGTH:]
-
-#returns a tupe: (tag, message)
-def get_tag_and_message(raw_message):
-    return raw_message[:HMAC_TAG_LENGTH], raw_message[HMAC_TAG_LENGTH:]
-
-
 
 def derive_key(session_key,salt):
 
