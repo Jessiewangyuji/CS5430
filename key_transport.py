@@ -24,24 +24,21 @@ def sign_session_key(receiver):
     print "start_session"
 
     tA = time.ctime()
-    os.system("openssl rand 64 -hex -out alice/session_key.txt")
-    session_key = read_file("alice/session_key.txt")
+    session_key = subprocess.check_output(("openssl", "rand", "64", "-hex"))
 
-    os.system("openssl rsautl -oaep -encrypt -inkey alice/b_public.pem -pubin -in alice/session_key.txt -out alice/session_cipher.txt")
-
-    session_cipher = read_file("alice/session_cipher.txt")
+    echo_program = subprocess.Popen(('echo',session_key), stdout=subprocess.PIPE)
+    session_cipher = subprocess.check_output(("openssl", "rsautl", "-oaep", "-encrypt", "-inkey", "alice/b_public.pem", "-pubin"), stdin=echo_program.stdout)
 
     message = pickle.dumps([receiver,tA,session_cipher])
 
-    write_file("alice/message.txt",message)
+    echo_program = subprocess.Popen(('echo',message), stdout=subprocess.PIPE)
+    hashed = subprocess.check_output(("openssl", "dgst", "-sha256"),stdin=echo_program.stdout)[-SHA256_LENGTH-1:].strip()
 
-    hashed = subprocess.check_output(("openssl", "dgst", "-sha256", "alice/message.txt"))[-SHA256_LENGTH-1:]
-
-    write_file("alice/hashed.txt",hashed)
-
-    os.system("openssl rsautl -sign -in alice/hashed.txt -inkey alice/private.pem -out alice/sig")
+    echo_program = subprocess.Popen(('echo',hashed), stdout=subprocess.PIPE)
+    subprocess.check_output(("openssl", "rsautl", "-sign", "-inkey", "alice/private.pem", "-out", "alice/sig"),stdin=echo_program.stdout)
 
     digital_signature = read_file("alice/sig")
+    os.system("rm alice/sig")
 
     return pickle.dumps([digital_signature, message]), session_key
 
@@ -50,14 +47,14 @@ def sign_session_key(receiver):
 def verify_transport_signature(digital_signature_and_message):
     digital_signature, message = pickle.loads(digital_signature_and_message)
 
+    echo_program = subprocess.Popen(('echo',message), stdout=subprocess.PIPE)
+    hashed = subprocess.check_output(("openssl", "dgst", "-sha256"),stdin=echo_program.stdout)[-SHA256_LENGTH-1:]
+
     write_file("bob/sig",digital_signature)
-    write_file("bob/message.txt",message)
-
-    hashed = subprocess.check_output(("openssl", "dgst", "-sha256", "bob/message.txt"))[-SHA256_LENGTH-1:]
-
-    write_file("bob/hashed.txt",hashed)
 
     hash_to_verify = subprocess.check_output(("openssl", "rsautl", "-verify", "-in", "bob/sig", "-inkey", "bob/a_public.pem", "-pubin"))
+
+    os.system("rm bob/sig")
 
     if hashed == hash_to_verify:
         print("signature verified")
