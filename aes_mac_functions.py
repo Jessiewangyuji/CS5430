@@ -8,6 +8,8 @@ from cryptography.hazmat.backends import default_backend
 HMAC_TAG_LENGTH = 64
 IV_LENGTH = 32
 
+DEVNULL = open(os.devnull,'w')
+
 def enc(message,key,iv):
     echo_program = subprocess.Popen(('echo',message), stdout=subprocess.PIPE)
     encrypted_message = subprocess.check_output(("openssl", "enc", "-aes-256-cbc", "-base64", "-K", key, "-iv", iv), stdin=echo_program.stdout).strip()
@@ -27,7 +29,7 @@ def enc_mac(message,enc_key,mac_key,iv):
 
 def dec(message,key,iv):
     echo_program = subprocess.Popen(('echo',message), stdout=subprocess.PIPE)
-    decrypted_message = subprocess.check_output(("openssl", "enc", "-d", "-aes-256-cbc", "-base64", "-K", key, "-iv", iv), stdin=echo_program.stdout).strip()
+    decrypted_message = subprocess.check_output(("openssl", "enc", "-d", "-aes-256-cbc", "-base64", "-K", key, "-iv", iv), stdin=echo_program.stdout, stderr = DEVNULL).strip()
     return decrypted_message
 
 
