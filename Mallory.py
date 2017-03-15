@@ -2,6 +2,7 @@ import socket
 import time
 import os
 import sys
+import pickle
 
 def sendmsg(socket, message, host, port):
     socket.send(message)
@@ -43,31 +44,50 @@ s2 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s2.connect((receivehost, receiveport))
 
 while action == "y":
-    message = clientsocket.recv(5000)
+    raw_message = clientsocket.recv(5000)
     print clientsocket.gettimeout()
     counter += 1
-    print message
+    print raw_message
     if raw_input("Save?(y/n)") == 'y':
         filename = "mallory/message" + str(counter) + ".txt"
         with open(filename, "w+") as file:
-            file.write(message)
+            file.write(raw_message)
             file.close()
 
     action2 = raw_input("What do you want to do with the message?(forward, delete, modify, replay)")
+
     if action2 == "forward":
-        sendmsg(s2, message, receivehost, receiveport)
+        sendmsg(s2, raw_message, receivehost, receiveport)
+
     elif action2 == "modify":
         print "modify"
-        message = raw_input("What do you want to modify the message to?")
-        sendmsg(s2, message, receivehost, receiveport)
+        new_message = raw_input("What do you want to modify the message to?")
+        new_message = str(counter) + " " + new_message
+        if config == 0:
+        	raw_message = new_message
+
+        elif config == 1:
+        	iv,old_message = pickle.loads(raw_message)
+        	raw_message = pickle.dumps([iv,new_message])
+
+        elif config == 2:
+        	tag,old_message = pickle.loads(raw_message)
+        	raw_message = pickle.dumps([tag,new_message])
+
+        elif config == 3:
+        	tag,old_message = pickle.loads(raw_message)
+        	iv,old_message_inner = pickle.loads(old_message)
+        	raw_message = pickle.dumps([tag,pickle.dumps([iv,new_message])])
+
+        sendmsg(s2, raw_message, receivehost, receiveport)
     elif action2 == "delete":
-        print message, " deleted"
+        print raw_message, " deleted"
     elif action2 == "replay":
         filename = raw_input("Which message to replay?")
         with open(filename, "r") as file:
-            message = file.read()
+            raw_message = file.read()
             file.close()
-        sendmsg(s2, message, receivehost, receiveport)
+        sendmsg(s2, raw_message, receivehost, receiveport)
 
 
     action = raw_input("Continue?(y/n)")

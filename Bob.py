@@ -94,9 +94,13 @@ while action == "y":
 
         elif config == 1:
             [iv,message] = pickle.loads(raw_message)
-            dec_message = dec(message,enc_key,iv)
-            receivedNo = dec_message.split(" ")[0]
-            print dec_message
+            try:
+                dec_message = dec(message,enc_key,iv)
+                receivedNo = dec_message.split(" ")[0]
+                print dec_message
+            except:
+                print("decrypt failed!")
+
 
         elif config == 2:
             [tag,message] = pickle.loads(raw_message)
@@ -105,7 +109,6 @@ while action == "y":
             else:
                 print("HMAC tag did not match. ABORT!")
                 exit()
-            print message.split(" ")
             receivedNo = message.split(" ")[0]
 
         else:
