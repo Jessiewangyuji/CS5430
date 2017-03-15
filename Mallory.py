@@ -116,7 +116,7 @@ while action == "y":
 
 
     action = raw_input("Continue?(y/n)")
-#TODO: Change receiver
+
     
 clientsocket.close()
 s2.close()

@@ -24,7 +24,7 @@ def sign_session_key(receiver):
     print "start_session"
 
     tA = time.ctime()
-    session_key = subprocess.check_output(("openssl", "rand", "64", "-hex"))
+    session_key = "Alice" + subprocess.check_output(("openssl", "rand", "64", "-hex"))
 
     echo_program = subprocess.Popen(('echo',session_key), stdout=subprocess.PIPE)
     session_cipher = subprocess.check_output(("openssl", "rsautl", "-oaep", "-encrypt", "-inkey", "alice/b_public.pem", "-pubin"), stdin=echo_program.stdout)

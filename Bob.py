@@ -34,15 +34,21 @@ def establish_session(digital_signature_and_message):
     session_cipher = message[2]
 
     if name != "Bob":
-        print("incorrect recipient. Abort!")
+        print "incorrect recipient. Abort!"
         return False
     if timeDiff(time.ctime(),time_sent).seconds > MAX_TIME_DIFF:
-        print("message too old")
+        print "message too old" 
         return False
 
     write_file("bob/session_cipher.txt",session_cipher)
     
     session_key = subprocess.check_output(("openssl", "rsautl", "-decrypt", "-oaep", "-inkey", "bob/private.pem", "-in", "bob/session_cipher.txt"))
+    name = session_key[:5]
+    session_key = session_key[5:]
+
+    if name != "Alice":
+        print "Sender is not Alice"
+        return False
 
     os.system("rm bob/session_cipher.txt")
 
