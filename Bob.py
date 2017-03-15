@@ -6,6 +6,7 @@ from aes_mac_functions import *
 from key_transport import *
 import datetime
 import pickle
+import subprocess
 
 MAX_BYTES_TO_READ = 5000
 MAX_TIME_DIFF = 120
@@ -41,12 +42,9 @@ def establish_session(digital_signature_and_message):
 
     write_file("bob/session_cipher.txt",session_cipher)
     
-    os.system("openssl rsautl -decrypt -oaep -inkey bob/private.pem -in bob/session_cipher.txt -out bob/session_key.txt")
-
-    session_key = read_file("bob/session_key.txt")
+    session_key = subprocess.check_output(("openssl", "rsautl", "-decrypt", "-oaep", "-inkey", "bob/private.pem", "-in", "bob/session_cipher.txt"))
 
     os.system("rm bob/session_cipher.txt")
-    os.system("rm bob/session_key.txt")
 
     enc_key = derive_key(session_key,"enc_key")
     mac_key = derive_key(session_key,"mac_key")
