@@ -10,6 +10,33 @@ def sendmsg(socket, message, host, port):
 def replay():
     print "replay"
 
+
+def print_message(raw_message,config):
+
+    message_num = None
+    message = None
+    iv = None
+    ciphertext = None
+    tag = None
+
+    if config == 0:
+        message_num = raw_message.split(" ")[0]
+        print "Message: ",raw_message 
+    elif config == 1:
+        iv,ciphertext = pickle.loads(raw_message)
+        print "Ciphertext: ", ciphertext
+    elif config == 2:
+        tag,message = pickle.loads(raw_message)
+        print "HMAC tag: ", tag
+        print "Message: ", message
+    elif config == 3:
+        tag,encrypted = pickle.loads(raw_message)
+        iv,ciphertext = pickle.loads(encrypted)
+        print "HMAC tag: ", tag 
+        print "Ciphertext: ", ciphertext
+
+    return message_num,message,iv,ciphertext,tag
+
 argv = sys.argv
 config = argv[1]
 
@@ -45,9 +72,10 @@ s2.connect((receivehost, receiveport))
 
 while action == "y":
     raw_message = clientsocket.recv(5000)
-    print clientsocket.gettimeout()
+    # print clientsocket.gettimeout()
+    message_num,message,iv,ciphertext,tag = print_message(raw_message,config)
+
     counter += 1
-    print raw_message
     if raw_input("Save?(y/n)") == 'y':
         filename = "mallory/message" + str(counter) + ".txt"
         with open(filename, "w+") as file:
@@ -62,22 +90,19 @@ while action == "y":
     elif action2 == "modify":
         print "modify"
         new_message = raw_input("What do you want to modify the message to?")
-        new_message = str(counter) + " " + new_message
+        if message_num != None:
+            new_message = message_num + " " + new_message
         if config == 0:
-        	raw_message = new_message
+            raw_message = new_message
 
         elif config == 1:
-        	iv,old_message = pickle.loads(raw_message)
-        	raw_message = pickle.dumps([iv,new_message])
+            raw_message = pickle.dumps([iv,new_message])
 
         elif config == 2:
-        	tag,old_message = pickle.loads(raw_message)
-        	raw_message = pickle.dumps([tag,new_message])
+            raw_message = pickle.dumps([tag,new_message])
 
         elif config == 3:
-        	tag,old_message = pickle.loads(raw_message)
-        	iv,old_message_inner = pickle.loads(old_message)
-        	raw_message = pickle.dumps([tag,pickle.dumps([iv,new_message])])
+            raw_message = pickle.dumps([tag,pickle.dumps([iv,new_message])])
 
         sendmsg(s2, raw_message, receivehost, receiveport)
     elif action2 == "delete":

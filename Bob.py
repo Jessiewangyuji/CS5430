@@ -80,6 +80,8 @@ s.bind((host, port))
 s.listen(5)
 (clientsocket, address) = s.accept()
 
+receivedNo = 0
+
 while action == "y":
     raw_message = clientsocket.recv(5000)
     
@@ -88,8 +90,8 @@ while action == "y":
             session_established = True
             continue
     else:
-	if config == 0:
-            print(raw_message)
+        if config == 0:
+            print raw_message 
             receivedNo = raw_message.split(" ")[0]
 
         elif config == 1:
@@ -99,15 +101,15 @@ while action == "y":
                 receivedNo = dec_message.split(" ")[0]
                 print dec_message
             except:
-                print("decrypt failed!")
+                print "decrypt failed!"
 
 
         elif config == 2:
             [tag,message] = pickle.loads(raw_message)
             if(verify_mac(message,mac_key,tag)):
-                print(message)
+                print message
             else:
-                print("HMAC tag did not match. ABORT!")
+                print "HMAC tag did not match. ABORT!"
                 exit()
             receivedNo = message.split(" ")[0]
 
@@ -116,9 +118,9 @@ while action == "y":
             if(verify_mac(encrypted_message,mac_key,tag)):
                 [iv,message] = pickle.loads(encrypted_message)
                 dec_message = dec(message,enc_key,iv)
-                print(dec_message)
+                print dec_message
             else:
-                print("HMAC tag did not match. ABORT!")
+                print "HMAC tag did not match. ABORT!"
                 exit()
             receivedNo = dec_message.split(" ")[0]
                 
