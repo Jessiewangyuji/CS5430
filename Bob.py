@@ -104,6 +104,7 @@ while action == "y":
             else:
                 print("HMAC tag did not match. ABORT!")
                 exit()
+            print message.split(" ")
             receivedNo = message.split(" ")[0]
 
         else:

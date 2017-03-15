@@ -29,6 +29,8 @@ host = argv[2]
 port = int(argv[3])
 counter = 0
 
+receivehost = raw_input("What's the host address you want to communicate with?")
+receiveport = int(raw_input("What's the port number you want to communicate with?"))
 
 action = "y"
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -37,8 +39,6 @@ s.bind((host, port))
 s.listen(5)
 (clientsocket, address) = s.accept()
 
-receivehost = raw_input("What's the host address you want to communicate with?")
-receiveport = int(raw_input("What's the port number you want to communicate with?"))
 s2 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s2.connect((receivehost, receiveport))
 

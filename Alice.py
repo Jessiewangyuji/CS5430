@@ -65,6 +65,7 @@ while action == "y":
         final_message = pickle.dumps([iv,encrypted_message])
 
     elif config == 2:
+        print message
         tag = mac(message,mac_key)
         final_message = pickle.dumps([tag,message])
 
