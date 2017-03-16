@@ -92,9 +92,15 @@ while action == "y":
     raw_message = clientsocket.recv(5000)
     
     if not session_established:
-        if establish_session(raw_message):
-            session_established = True
-            continue
+
+        try:
+            if establish_session(raw_message):
+                session_established = True
+                continue
+        except:
+            print "session establish fail!"
+            exit()
+
     else:
         if config == 0:
             print raw_message 

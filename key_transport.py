@@ -6,6 +6,7 @@ import pickle
 
 SHA256_LENGTH = 64
 
+DEVNULL = open(os.devnull,'w')
 
 def read_file(filename):
     temp = ""
@@ -24,7 +25,7 @@ def sign_session_key(receiver):
     print "start_session"
 
     tA = time.ctime()
-    session_key = "Alice" + subprocess.check_output(("openssl", "rand", "128"))
+    session_key = "Alice" + subprocess.check_output(("openssl", "rand", "64", "-hex"))
 
     echo_program = subprocess.Popen(('echo',session_key), stdout=subprocess.PIPE)
     session_cipher = subprocess.check_output(("openssl", "rsautl", "-oaep", "-encrypt", "-inkey", "alice/b_public.pem", "-pubin"), stdin=echo_program.stdout)
@@ -52,7 +53,7 @@ def verify_transport_signature(digital_signature_and_message):
 
     write_file("bob/sig",digital_signature)
 
-    hash_to_verify = subprocess.check_output(("openssl", "rsautl", "-verify", "-in", "bob/sig", "-inkey", "bob/a_public.pem", "-pubin"))
+    hash_to_verify = subprocess.check_output(("openssl", "rsautl", "-verify", "-in", "bob/sig", "-inkey", "bob/a_public.pem", "-pubin"),stderr = DEVNULL)
 
     os.system("rm bob/sig")
 
