@@ -44,7 +44,7 @@ def derive_key(session_key,salt):
 
     hkdf = HKDF(
         algorithm = hashes.SHA256(),
-        length = 64,
+        length = 32,
         salt = salt,
         info = None,
         backend = backend
