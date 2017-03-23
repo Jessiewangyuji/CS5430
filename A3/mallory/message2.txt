@@ -1,0 +1,6 @@
+(lp0
+S'5a72ec8f534935143e39fdd88fb84c2a1f6914ec8b3ea367ad2488f70f274556'
+p1
+aS'0 hello'
+p2
+a.
