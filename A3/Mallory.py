@@ -30,10 +30,13 @@ def print_message(raw_message,config):
         print "HMAC tag: ", tag
         print "Message: ", message
     elif config == 3:
-        tag,encrypted = pickle.loads(raw_message)
-        iv,ciphertext = pickle.loads(encrypted)
-        print "HMAC tag: ", tag 
-        print "Ciphertext: ", ciphertext
+        try:
+            tag,encrypted = pickle.loads(raw_message)
+            iv,ciphertext = pickle.loads(encrypted)
+            print "HMAC tag: ", tag 
+            print "Ciphertext: ", ciphertext
+        except:
+            return message_num,message,iv,ciphertext,tag
 
     return message_num,message,iv,ciphertext,tag
 
@@ -73,10 +76,7 @@ s2.connect((receivehost, receiveport))
 while action == "y":
     raw_message = clientsocket.recv(5000)
     # print clientsocket.gettimeout()
-    #try:
-    #    message_num,message,iv,ciphertext,tag = print_message(raw_message,config)
-    #except:
-    #    pass
+    message_num,message,iv,ciphertext,tag = print_message(raw_message,config)
 
     counter += 1
     if raw_input("Save?(y/n)") == 'y':
