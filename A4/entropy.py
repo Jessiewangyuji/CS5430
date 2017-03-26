@@ -1,3 +1,5 @@
+from sets import Set
+
 def entropy(password):
 	total_entropy = 0
 	uppercase_exists = False
@@ -22,6 +24,8 @@ def entropy(password):
 	if uppercase_exists and non_alphabet_exists:
 		total_entropy += 6
 
+
+
 	return total_entropy
 
 
@@ -35,11 +39,32 @@ def simple_transformation(password):
 	num_char['5'] = 's'
 	num_char['7'] = 't'
 	num_char['8'] = 'b'
+	num_char['@'] = 'a'
+	num_char['$'] = 's'
+
 
 	transformed = password.lower()
 
 	transformed = ''.join([num_char[i] if i in num_char else i for i in transformed])
 
 	return transformed
+
+
+
+def dictionary_without_vowels(dictionary):
+	new_dictionary = Set()
+
+	vowels = 'aeiou'
+
+	for i in dictionary:
+		new_string = i
+		for v in vowels:
+			new_string = new_string.replace(v,'')
+
+		if new_string != '':
+			new_dictionary.add(new_string)
+
+	return new_dictionary
+
 
 
