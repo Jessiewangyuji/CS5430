@@ -54,7 +54,7 @@ while True:
     meaningfulSet = Set()
     transformed = simple_transformation(password)
     for i in range(len(password)):
-        for j in range(i + 4, len(password)):
+        for j in range(i + 3, len(password)):
             if transformed[i:j] in words:
                 print transformed[i:j]
                 for k in range(i, j):
