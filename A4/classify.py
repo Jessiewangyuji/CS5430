@@ -104,8 +104,7 @@ while True:
     #predictable number? 19xx 20xx
     if weakC == 0:
         entropyC = entropy(password)
-        print entropyC
-        if entropyC > 20:
+        if entropyC > 25:
             print "strong"
         else:
             print "weak"
