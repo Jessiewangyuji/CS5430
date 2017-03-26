@@ -72,13 +72,21 @@ while True:
     prevChar = 0
     prevDiff = 0
     prevIndDiff = 0
+    count = 0
     for i in range(len(password)):
         if ord(password[i]) - prevChar == prevDiff and i - prevInd == prevIndDiff:
-            weakC += 1
+            count += 1
+            if count > len(password) / 4:
+                weakC += 1
+        else:
+            count = 0
         prevIndDiff = i - prevInd
         prevInd = i
         prevDiff = ord(password[i]) - prevChar
         prevChar = ord(password[i])
+
+    if count > len(password) / 2:
+        weakC += 1
 
     #repetition
     for length in range(1, len(password) / 2):
@@ -98,12 +106,14 @@ while True:
         while j < len(password):
             if repetitionTable[password[i:j]] > len(password) / (2 * length):
                 weakC += 1
+                print "weak repetition"
             i = j + 1
             j = i + length
 
     #predictable number? 19xx 20xx
     if weakC == 0:
         entropyC = entropy(password)
+        print entropyC
         if entropyC > 25:
             print "strong"
         else:
