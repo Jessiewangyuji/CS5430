@@ -1,4 +1,5 @@
 from sets import Set
+from entropy import *
 
 def create_wordList():
     global words
@@ -50,9 +51,10 @@ while True:
     key_line3 = "zxcvbnm"
     
     contig_key = False
+    transformed = simple_transformation(password)
     for i in range(len(password)):
         for j in range(i + 1, len(password)):
-            if password[i:j] in words:
+            if transformed[i:j] in words:
                 meaningful += 1
                 meaningfulChar += j - i
             if (password[i:j] in key_line1 or password[i:j] in key_line2 \
@@ -101,7 +103,12 @@ while True:
 
     #predictable number? 19xx 20xx
     if weakC == 0:
-        print "strong"
+        entropyC = entropy(password)
+        print entropyC
+        if entropyC > 20:
+            print "strong"
+        else:
+            print "weak"
     else:
         print "weak"
 
