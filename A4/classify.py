@@ -51,17 +51,21 @@ while True:
     key_line3 = "zxcvbnm"
     
     contig_key = False
+    meaningfulSet = Set()
     transformed = simple_transformation(password)
     for i in range(len(password)):
-        for j in range(i + 1, len(password)):
+        for j in range(i + 4, len(password)):
             if transformed[i:j] in words:
-                meaningful += 1
-                meaningfulChar += j - i
+                print transformed[i:j]
+                for k in range(i, j):
+                    meaningfulSet.add(k)
+        
             if (password[i:j] in key_line1 or password[i:j] in key_line2 \
                 or password[i:j] in key_line3) and (j - i) > 3:
                 contig_key = True
 
-    if meaningfulChar > len(password) / 2: #Random number i m choosing
+    if len(meaningfulSet) > len(password) / 2: #Random number i m choosing
+        print meaningfulSet
         weakC += 1
     
     if contig_key:
