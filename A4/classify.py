@@ -54,9 +54,8 @@ while True:
     meaningfulSet = Set()
     transformed = simple_transformation(password)
     for i in range(len(password)):
-        for j in range(i + 3, len(password)):
+        for j in range(i + 3, len(password) + 1):
             if transformed[i:j] in words:
-                print transformed[i:j]
                 for k in range(i, j):
                     meaningfulSet.add(k)
         
@@ -65,7 +64,6 @@ while True:
                 contig_key = True
 
     if len(meaningfulSet) > len(password) / 2: #Random number i m choosing
-        print meaningfulSet
         weakC += 1
     
     if contig_key:
@@ -110,7 +108,6 @@ while True:
         while j < len(password):
             if repetitionTable[password[i:j]] > len(password) / (2 * length):
                 weakC += 1
-                print "weak repetition"
             i = j + 1
             j = i + length
 
