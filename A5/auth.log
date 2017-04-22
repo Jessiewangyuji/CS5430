@@ -1,0 +1,172 @@
+Mar 26 22:55:21 kevin-VirtualBox systemd-logind[901]: New seat seat0.
+Mar 26 22:55:21 kevin-VirtualBox systemd-logind[901]: Watching system buttons on /dev/input/event0 (Power Button)
+Mar 26 22:55:21 kevin-VirtualBox systemd-logind[901]: Watching system buttons on /dev/input/event1 (Sleep Button)
+Mar 26 22:55:21 kevin-VirtualBox systemd-logind[901]: Watching system buttons on /dev/input/event3 (Video Bus)
+Mar 26 22:55:32 kevin-VirtualBox lightdm: pam_unix(lightdm-autologin:session): session opened for user kevin by (uid=0)
+Mar 26 22:55:32 kevin-VirtualBox systemd: pam_unix(systemd-user:session): session opened for user kevin by (uid=0)
+Mar 26 22:55:32 kevin-VirtualBox systemd-logind[901]: New session c1 of user kevin.
+Mar 26 22:55:36 kevin-VirtualBox gnome-keyring-daemon[1455]: couldn't access control socket: /run/user/1000/keyring/control: No such file or directory
+Mar 26 22:55:36 kevin-VirtualBox gnome-keyring-daemon[1454]: couldn't access control socket: /run/user/1000/keyring/control: No such file or directory
+Mar 26 22:55:49 kevin-VirtualBox gnome-keyring-daemon[1454]: The Secret Service was already initialized
+Mar 26 22:55:49 kevin-VirtualBox gnome-keyring-daemon[1454]: The SSH agent was already initialized
+Mar 26 22:55:49 kevin-VirtualBox gnome-keyring-daemon[1454]: The PKCS#11 component was already initialized
+Mar 26 22:55:55 kevin-VirtualBox polkitd(authority=local): Registered Authentication Agent for unix-session:c1 (system bus name :1.50 [/usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1], object path /org/gnome/PolicyKit1/AuthenticationAgent, locale en_US.UTF-8)
+Mar 26 22:56:14 kevin-VirtualBox dbus[768]: [system] Failed to activate service 'org.bluez': timed out
+Mar 26 22:56:59 kevin-VirtualBox pkexec: pam_unix(polkit-1:session): session opened for user root by (uid=1000)
+Mar 26 22:56:59 kevin-VirtualBox pkexec: pam_systemd(polkit-1:session): Cannot create session: Already running in a session
+Mar 26 22:56:59 kevin-VirtualBox pkexec[2104]: kevin: Executing command [USER=root] [TTY=unknown] [CWD=/home/kevin] [COMMAND=/usr/lib/update-notifier/package-system-locked]
+Mar 26 23:07:59 kevin-VirtualBox compiz: gkr-pam: unlocked login keyring
+Mar 26 23:17:01 kevin-VirtualBox CRON[2504]: pam_unix(cron:session): session opened for user root by (uid=0)
+Mar 26 23:17:01 kevin-VirtualBox CRON[2504]: pam_unix(cron:session): session closed for user root
+Mar 26 23:35:16 kevin-VirtualBox compiz: gkr-pam: unlocked login keyring
+Mar 27 00:17:02 kevin-VirtualBox CRON[10460]: pam_unix(cron:session): session opened for user root by (uid=0)
+Mar 27 00:17:02 kevin-VirtualBox CRON[10460]: pam_unix(cron:session): session closed for user root
+Mar 27 00:18:50 kevin-VirtualBox systemd-logind[757]: New seat seat0.
+Mar 27 00:18:50 kevin-VirtualBox systemd-logind[757]: Watching system buttons on /dev/input/event0 (Power Button)
+Mar 27 00:18:50 kevin-VirtualBox systemd-logind[757]: Watching system buttons on /dev/input/event1 (Sleep Button)
+Mar 27 00:18:50 kevin-VirtualBox systemd-logind[757]: Watching system buttons on /dev/input/event3 (Video Bus)
+Mar 27 00:19:01 kevin-VirtualBox lightdm: pam_unix(lightdm-autologin:session): session opened for user kevin by (uid=0)
+Mar 27 00:19:01 kevin-VirtualBox systemd-logind[757]: New session c1 of user kevin.
+Mar 27 00:19:01 kevin-VirtualBox systemd: pam_unix(systemd-user:session): session opened for user kevin by (uid=0)
+Mar 27 00:19:06 kevin-VirtualBox gnome-keyring-daemon[1452]: couldn't access control socket: /run/user/1000/keyring/control: No such file or directory
+Mar 27 00:19:06 kevin-VirtualBox gnome-keyring-daemon[1451]: couldn't access control socket: /run/user/1000/keyring/control: No such file or directory
+Mar 27 00:19:14 kevin-VirtualBox gnome-keyring-daemon[1451]: The Secret Service was already initialized
+Mar 27 00:19:14 kevin-VirtualBox gnome-keyring-daemon[1451]: The SSH agent was already initialized
+Mar 27 00:19:14 kevin-VirtualBox gnome-keyring-daemon[1451]: The PKCS#11 component was already initialized
+Mar 27 00:19:21 kevin-VirtualBox polkitd(authority=local): Registered Authentication Agent for unix-session:c1 (system bus name :1.52 [/usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1], object path /org/gnome/PolicyKit1/AuthenticationAgent, locale en_US.UTF-8)
+Mar 27 00:19:39 kevin-VirtualBox dbus[722]: [system] Failed to activate service 'org.bluez': timed out
+Mar 27 00:20:25 kevin-VirtualBox pkexec: pam_unix(polkit-1:session): session opened for user root by (uid=1000)
+Mar 27 00:20:25 kevin-VirtualBox pkexec: pam_systemd(polkit-1:session): Cannot create session: Already running in a session
+Mar 27 00:20:25 kevin-VirtualBox pkexec[2287]: kevin: Executing command [USER=root] [TTY=unknown] [CWD=/home/kevin] [COMMAND=/usr/lib/update-notifier/package-system-locked]
+Mar 27 00:33:02 kevin-VirtualBox compiz: gkr-pam: unlocked login keyring
+Mar 27 00:41:03 kevin-VirtualBox compiz: gkr-pam: unlocked login keyring
+Mar 27 00:45:16 kevin-VirtualBox systemd-logind[696]: New seat seat0.
+Mar 27 00:45:16 kevin-VirtualBox systemd-logind[696]: Watching system buttons on /dev/input/event0 (Power Button)
+Mar 27 00:45:16 kevin-VirtualBox systemd-logind[696]: Watching system buttons on /dev/input/event1 (Sleep Button)
+Mar 27 00:45:16 kevin-VirtualBox systemd-logind[696]: Watching system buttons on /dev/input/event3 (Video Bus)
+Mar 27 00:45:33 kevin-VirtualBox lightdm: pam_unix(lightdm-autologin:session): session opened for user kevin by (uid=0)
+Mar 27 00:45:33 kevin-VirtualBox systemd-logind[696]: New session c1 of user kevin.
+Mar 27 00:45:33 kevin-VirtualBox systemd: pam_unix(systemd-user:session): session opened for user kevin by (uid=0)
+Mar 27 00:45:38 kevin-VirtualBox gnome-keyring-daemon[1755]: couldn't access control socket: /run/user/1000/keyring/control: No such file or directory
+Mar 27 00:45:38 kevin-VirtualBox gnome-keyring-daemon[1754]: couldn't access control socket: /run/user/1000/keyring/control: No such file or directory
+Mar 27 00:45:47 kevin-VirtualBox gnome-keyring-daemon[1755]: The Secret Service was already initialized
+Mar 27 00:45:47 kevin-VirtualBox gnome-keyring-daemon[1755]: The SSH agent was already initialized
+Mar 27 00:45:47 kevin-VirtualBox gnome-keyring-daemon[1755]: The PKCS#11 component was already initialized
+Mar 27 00:45:56 kevin-VirtualBox polkitd(authority=local): Registered Authentication Agent for unix-session:c1 (system bus name :1.54 [/usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1], object path /org/gnome/PolicyKit1/AuthenticationAgent, locale en_US.UTF-8)
+Mar 27 00:46:13 kevin-VirtualBox dbus[737]: [system] Failed to activate service 'org.bluez': timed out
+Mar 27 00:46:58 kevin-VirtualBox pkexec: pam_unix(polkit-1:session): session opened for user root by (uid=1000)
+Mar 27 00:46:58 kevin-VirtualBox pkexec: pam_systemd(polkit-1:session): Cannot create session: Already running in a session
+Mar 27 00:46:58 kevin-VirtualBox pkexec[3031]: kevin: Executing command [USER=root] [TTY=unknown] [CWD=/home/kevin] [COMMAND=/usr/lib/update-notifier/package-system-locked]
+Mar 27 00:49:56 kevin-VirtualBox pkexec: pam_unix(polkit-1:session): session opened for user root by (uid=1000)
+Mar 27 00:49:56 kevin-VirtualBox pkexec: pam_systemd(polkit-1:session): Cannot create session: Already running in a session
+Mar 27 00:49:56 kevin-VirtualBox pkexec[6122]: kevin: Executing command [USER=root] [TTY=unknown] [CWD=/home/kevin] [COMMAND=/usr/lib/update-notifier/package-system-locked]
+Mar 27 00:55:22 kevin-VirtualBox compiz: gkr-pam: unlocked login keyring
+Mar 27 01:17:01 kevin-VirtualBox CRON[6475]: pam_unix(cron:session): session opened for user root by (uid=0)
+Mar 27 01:17:01 kevin-VirtualBox CRON[6475]: pam_unix(cron:session): session closed for user root
+Mar 27 01:39:58 kevin-VirtualBox compiz: gkr-pam: unlocked login keyring
+Mar 27 02:17:01 kevin-VirtualBox CRON[7639]: pam_unix(cron:session): session opened for user root by (uid=0)
+Mar 27 02:17:01 kevin-VirtualBox CRON[7639]: pam_unix(cron:session): session closed for user root
+Mar 27 02:22:29 kevin-VirtualBox compiz: gkr-pam: unlocked login keyring
+Mar 31 04:48:40 kevin-VirtualBox systemd-logind[824]: New seat seat0.
+Mar 31 04:48:40 kevin-VirtualBox systemd-logind[824]: Watching system buttons on /dev/input/event0 (Power Button)
+Mar 31 04:48:40 kevin-VirtualBox systemd-logind[824]: Watching system buttons on /dev/input/event1 (Sleep Button)
+Mar 31 04:48:40 kevin-VirtualBox systemd-logind[824]: Watching system buttons on /dev/input/event3 (Video Bus)
+Mar 31 04:48:58 kevin-VirtualBox lightdm: pam_unix(lightdm-autologin:session): session opened for user kevin by (uid=0)
+Mar 31 04:48:58 kevin-VirtualBox systemd-logind[824]: New session c1 of user kevin.
+Mar 31 04:48:58 kevin-VirtualBox systemd: pam_unix(systemd-user:session): session opened for user kevin by (uid=0)
+Mar 31 04:49:04 kevin-VirtualBox gnome-keyring-daemon[1733]: couldn't access control socket: /run/user/1000/keyring/control: No such file or directory
+Mar 31 04:49:04 kevin-VirtualBox gnome-keyring-daemon[1732]: couldn't access control socket: /run/user/1000/keyring/control: No such file or directory
+Mar 31 04:49:16 kevin-VirtualBox gnome-keyring-daemon[1732]: The Secret Service was already initialized
+Mar 31 04:49:17 kevin-VirtualBox gnome-keyring-daemon[1732]: The SSH agent was already initialized
+Mar 31 04:49:17 kevin-VirtualBox gnome-keyring-daemon[1732]: The PKCS#11 component was already initialized
+Mar 31 04:49:29 kevin-VirtualBox polkitd(authority=local): Registered Authentication Agent for unix-session:c1 (system bus name :1.56 [/usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1], object path /org/gnome/PolicyKit1/AuthenticationAgent, locale en_US.UTF-8)
+Mar 31 04:49:42 kevin-VirtualBox dbus[687]: [system] Failed to activate service 'org.bluez': timed out
+Mar 31 04:50:32 kevin-VirtualBox pkexec: pam_unix(polkit-1:session): session opened for user root by (uid=1000)
+Mar 31 04:50:32 kevin-VirtualBox pkexec: pam_systemd(polkit-1:session): Cannot create session: Already running in a session
+Mar 31 04:50:32 kevin-VirtualBox pkexec[2624]: kevin: Executing command [USER=root] [TTY=unknown] [CWD=/home/kevin] [COMMAND=/usr/lib/update-notifier/package-system-locked]
+Mar 31 04:56:29 kevin-VirtualBox pkexec: pam_unix(polkit-1:session): session opened for user root by (uid=1000)
+Mar 31 04:56:29 kevin-VirtualBox pkexec: pam_systemd(polkit-1:session): Cannot create session: Already running in a session
+Mar 31 04:56:29 kevin-VirtualBox pkexec[20369]: kevin: Executing command [USER=root] [TTY=unknown] [CWD=/home/kevin] [COMMAND=/usr/lib/update-notifier/package-system-locked]
+                                                                         Mar 31 22:05:56 kevin-VirtualBox systemd-logind[670]: New seat seat0.
+Mar 31 22:05:56 kevin-VirtualBox systemd-logind[670]: Watching system buttons on /dev/input/event0 (Power Button)
+Mar 31 22:05:56 kevin-VirtualBox systemd-logind[670]: Watching system buttons on /dev/input/event1 (Sleep Button)
+Mar 31 22:05:56 kevin-VirtualBox systemd-logind[670]: Watching system buttons on /dev/input/event3 (Video Bus)
+Mar 31 22:06:21 kevin-VirtualBox lightdm: pam_unix(lightdm-autologin:session): session opened for user kevin by (uid=0)
+Mar 31 22:06:21 kevin-VirtualBox systemd-logind[670]: New session c1 of user kevin.
+Mar 31 22:06:21 kevin-VirtualBox systemd: pam_unix(systemd-user:session): session opened for user kevin by (uid=0)
+Mar 31 22:06:25 kevin-VirtualBox gnome-keyring-daemon[1452]: couldn't access control socket: /run/user/1000/keyring/control: No such file or directory
+Mar 31 22:06:25 kevin-VirtualBox gnome-keyring-daemon[1451]: couldn't access control socket: /run/user/1000/keyring/control: No such file or directory
+Mar 31 22:06:36 kevin-VirtualBox gnome-keyring-daemon[1451]: The Secret Service was already initialized
+Mar 31 22:06:36 kevin-VirtualBox gnome-keyring-daemon[1451]: The SSH agent was already initialized
+Mar 31 22:06:36 kevin-VirtualBox gnome-keyring-daemon[1451]: The PKCS#11 component was already initialized
+Mar 31 22:06:44 kevin-VirtualBox polkitd(authority=local): Registered Authentication Agent for unix-session:c1 (system bus name :1.46 [/usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1], object path /org/gnome/PolicyKit1/AuthenticationAgent, locale en_US.UTF-8)
+Mar 31 22:07:01 kevin-VirtualBox dbus[672]: [system] Failed to activate service 'org.bluez': timed out
+Mar 31 22:07:47 kevin-VirtualBox pkexec: pam_unix(polkit-1:session): session opened for user root by (uid=1000)
+Mar 31 22:07:47 kevin-VirtualBox pkexec: pam_systemd(polkit-1:session): Cannot create session: Already running in a session
+Mar 31 22:07:47 kevin-VirtualBox pkexec[2683]: kevin: Executing command [USER=root] [TTY=unknown] [CWD=/home/kevin] [COMMAND=/usr/lib/update-notifier/package-system-locked]
+Mar 31 22:10:45 kevin-VirtualBox pkexec: pam_unix(polkit-1:session): session opened for user root by (uid=1000)
+Mar 31 22:10:45 kevin-VirtualBox pkexec: pam_systemd(polkit-1:session): Cannot create session: Already running in a session
+Mar 31 22:10:45 kevin-VirtualBox pkexec[3162]: kevin: Executing command [USER=root] [TTY=unknown] [CWD=/home/kevin] [COMMAND=/usr/lib/update-notifier/package-system-locked]
+Apr 22 12:51:43 kevin-VirtualBox systemd-logind[649]: New seat seat0.
+Apr 22 12:51:43 kevin-VirtualBox systemd-logind[649]: Watching system buttons on /dev/input/event0 (Power Button)
+Apr 22 12:51:43 kevin-VirtualBox systemd-logind[649]: Watching system buttons on /dev/input/event1 (Sleep Button)
+Apr 22 12:51:43 kevin-VirtualBox systemd-logind[649]: Watching system buttons on /dev/input/event3 (Video Bus)
+Apr 22 12:51:54 kevin-VirtualBox lightdm: pam_unix(lightdm-autologin:session): session opened for user kevin by (uid=0)
+Apr 22 12:51:54 kevin-VirtualBox systemd-logind[649]: New session c1 of user kevin.
+Apr 22 12:51:54 kevin-VirtualBox systemd: pam_unix(systemd-user:session): session opened for user kevin by (uid=0)
+Apr 22 12:51:58 kevin-VirtualBox gnome-keyring-daemon[1371]: couldn't access control socket: /run/user/1000/keyring/control: No such file or directory
+Apr 22 12:51:58 kevin-VirtualBox gnome-keyring-daemon[1372]: couldn't access control socket: /run/user/1000/keyring/control: No such file or directory
+Apr 22 12:52:10 kevin-VirtualBox gnome-keyring-daemon[1372]: The Secret Service was already initialized
+Apr 22 12:52:10 kevin-VirtualBox gnome-keyring-daemon[1372]: The SSH agent was already initialized
+Apr 22 12:52:10 kevin-VirtualBox gnome-keyring-daemon[1372]: The PKCS#11 component was already initialized
+Apr 22 12:52:18 kevin-VirtualBox polkitd(authority=local): Registered Authentication Agent for unix-session:c1 (system bus name :1.53 [/usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1], object path /org/gnome/PolicyKit1/AuthenticationAgent, locale en_US.UTF-8)
+Apr 22 12:52:35 kevin-VirtualBox dbus[674]: [system] Failed to activate service 'org.bluez': timed out
+Apr 22 12:53:20 kevin-VirtualBox pkexec: pam_unix(polkit-1:session): session opened for user root by (uid=1000)
+Apr 22 12:53:20 kevin-VirtualBox pkexec: pam_systemd(polkit-1:session): Cannot create session: Already running in a session
+Apr 22 12:53:20 kevin-VirtualBox pkexec[2072]: kevin: Executing command [USER=root] [TTY=unknown] [CWD=/home/kevin] [COMMAND=/usr/lib/update-notifier/package-system-locked]
+Apr 22 12:54:58 kevin-VirtualBox sudo:    kevin : TTY=pts/4 ; PWD=/home/kevin ; USER=root ; COMMAND=/usr/bin/less /var/log/auth.log
+Apr 22 12:54:58 kevin-VirtualBox sudo: pam_unix(sudo:session): session opened for user root by (uid=0)
+Apr 22 12:55:09 kevin-VirtualBox sudo: pam_unix(sudo:session): session closed for user root
+Apr 22 12:56:19 kevin-VirtualBox pkexec: pam_unix(polkit-1:session): session opened for user root by (uid=1000)
+Apr 22 12:56:19 kevin-VirtualBox pkexec: pam_systemd(polkit-1:session): Cannot create session: Already running in a session
+Apr 22 12:56:19 kevin-VirtualBox pkexec[2570]: kevin: Executing command [USER=root] [TTY=unknown] [CWD=/home/kevin] [COMMAND=/usr/lib/update-notifier/package-system-locked]
+Apr 22 12:56:32 kevin-VirtualBox polkitd(authority=local): Unregistered Authentication Agent for unix-session:c1 (system bus name :1.53, object path /org/gnome/PolicyKit1/AuthenticationAgent, locale en_US.UTF-8) (disconnected from bus)
+Apr 22 12:56:32 kevin-VirtualBox lightdm: pam_unix(lightdm-autologin:session): session closed for user kevin
+Apr 22 12:56:33 kevin-VirtualBox lightdm: PAM unable to dlopen(pam_kwallet.so): /lib/security/pam_kwallet.so: cannot open shared object file: No such file or directory
+Apr 22 12:56:33 kevin-VirtualBox lightdm: PAM adding faulty module: pam_kwallet.so
+Apr 22 12:56:33 kevin-VirtualBox lightdm: PAM unable to dlopen(pam_kwallet5.so): /lib/security/pam_kwallet5.so: cannot open shared object file: No such file or directory
+Apr 22 12:56:33 kevin-VirtualBox lightdm: PAM adding faulty module: pam_kwallet5.so
+Apr 22 12:56:33 kevin-VirtualBox lightdm: pam_unix(lightdm-greeter:session): session opened for user lightdm by (uid=0)
+Apr 22 12:56:33 kevin-VirtualBox systemd: pam_unix(systemd-user:session): session opened for user lightdm by (uid=0)
+Apr 22 12:56:33 kevin-VirtualBox systemd-logind[649]: New session c2 of user lightdm.
+Apr 22 12:56:33 kevin-VirtualBox lightdm: PAM unable to dlopen(pam_kwallet.so): /lib/security/pam_kwallet.so: cannot open shared object file: No such file or directory
+Apr 22 12:56:33 kevin-VirtualBox lightdm: PAM adding faulty module: pam_kwallet.so
+Apr 22 12:56:33 kevin-VirtualBox lightdm: PAM unable to dlopen(pam_kwallet5.so): /lib/security/pam_kwallet5.so: cannot open shared object file: No such file or directory
+Apr 22 12:56:33 kevin-VirtualBox lightdm: PAM adding faulty module: pam_kwallet5.so
+Apr 22 12:56:33 kevin-VirtualBox lightdm: pam_succeed_if(lightdm:auth): requirement "user ingroup nopasswdlogin" not met by user "kevin"
+Apr 22 12:56:38 kevin-VirtualBox lightdm: pam_unix(lightdm:auth): authentication failure; logname= uid=0 euid=0 tty=:0 ruser= rhost=  user=kevin
+Apr 22 12:56:40 kevin-VirtualBox lightdm: PAM unable to dlopen(pam_kwallet.so): /lib/security/pam_kwallet.so: cannot open shared object file: No such file or directory
+Apr 22 12:56:40 kevin-VirtualBox lightdm: PAM adding faulty module: pam_kwallet.so
+Apr 22 12:56:40 kevin-VirtualBox lightdm: PAM unable to dlopen(pam_kwallet5.so): /lib/security/pam_kwallet5.so: cannot open shared object file: No such file or directory
+Apr 22 12:56:40 kevin-VirtualBox lightdm: PAM adding faulty module: pam_kwallet5.so
+Apr 22 12:56:40 kevin-VirtualBox lightdm: pam_succeed_if(lightdm:auth): requirement "user ingroup nopasswdlogin" not met by user "kevin"
+Apr 22 12:56:43 kevin-VirtualBox lightdm: pam_unix(lightdm:auth): authentication failure; logname= uid=0 euid=0 tty=:0 ruser= rhost=  user=kevin
+Apr 22 12:56:45 kevin-VirtualBox lightdm: PAM unable to dlopen(pam_kwallet.so): /lib/security/pam_kwallet.so: cannot open shared object file: No such file or directory
+Apr 22 12:56:45 kevin-VirtualBox lightdm: PAM adding faulty module: pam_kwallet.so
+Apr 22 12:56:45 kevin-VirtualBox lightdm: PAM unable to dlopen(pam_kwallet5.so): /lib/security/pam_kwallet5.so: cannot open shared object file: No such file or directory
+Apr 22 12:56:45 kevin-VirtualBox lightdm: PAM adding faulty module: pam_kwallet5.so
+Apr 22 12:56:45 kevin-VirtualBox lightdm: pam_succeed_if(lightdm:auth): requirement "user ingroup nopasswdlogin" not met by user "kevin"
+Apr 22 12:56:47 kevin-VirtualBox lightdm: pam_unix(lightdm:auth): authentication failure; logname= uid=0 euid=0 tty=:0 ruser= rhost=  user=kevin
+Apr 22 12:56:50 kevin-VirtualBox lightdm: PAM unable to dlopen(pam_kwallet.so): /lib/security/pam_kwallet.so: cannot open shared object file: No such file or directory
+Apr 22 12:56:50 kevin-VirtualBox lightdm: PAM adding faulty module: pam_kwallet.so
+Apr 22 12:56:50 kevin-VirtualBox lightdm: PAM unable to dlopen(pam_kwallet5.so): /lib/security/pam_kwallet5.so: cannot open shared object file: No such file or directory
+Apr 22 12:56:50 kevin-VirtualBox lightdm: PAM adding faulty module: pam_kwallet5.so
+Apr 22 12:56:50 kevin-VirtualBox lightdm: pam_succeed_if(lightdm:auth): requirement "user ingroup nopasswdlogin" not met by user "kevin"
+Apr 22 12:56:51 kevin-VirtualBox lightdm: pam_unix(lightdm-greeter:session): session closed for user lightdm
+Apr 22 12:56:51 kevin-VirtualBox lightdm: pam_unix(lightdm:session): session opened for user kevin by (uid=0)
+Apr 22 12:56:51 kevin-VirtualBox systemd-logind[649]: New session c3 of user kevin.
+Apr 22 12:56:54 kevin-VirtualBox gnome-keyring-daemon[2762]: The Secret Service was already initialized
+Apr 22 12:56:54 kevin-VirtualBox gnome-keyring-daemon[2762]: The SSH agent was already initialized
+Apr 22 12:56:54 kevin-VirtualBox gnome-keyring-daemon[2762]: The PKCS#11 component was already initialized
+Apr 22 12:56:55 kevin-VirtualBox polkitd(authority=local): Registered Authentication Agent for unix-session:c3 (system bus name :1.119 [/usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1], object path /org/gnome/PolicyKit1/AuthenticationAgent, locale en_US.UTF-8)
+Apr 22 12:56:58 kevin-VirtualBox dbus[674]: [system] Failed to activate service 'org.bluez': timed out
