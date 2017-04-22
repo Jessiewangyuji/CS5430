@@ -24,7 +24,7 @@ with open(logpath, "r") as log:
 
             if user in failure_time:
                 list = failure_time[user]
-                for i in range(len(list)):
+                for i in range(0, len(list) - 1):
                     diff = (datetime_obj - list[i]).total_seconds()
                     if diff > TIME_WINDOW: #10-minute time window
                         del list[i]
