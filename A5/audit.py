@@ -3,7 +3,7 @@ from datetime import datetime
 from sets import Set
 TIME_WINDOW = 600
 SSH_TIME_WINDOW = 60 * 120
-SSH_NUM_IP = 1
+SSH_NUM_IP = 5
 LOGIN_ATTEMPT = 10
 LOGIN_ATTEMPT_ALREADY_LOGEDIN = 3
 
@@ -111,9 +111,10 @@ if len(user_attack) == 0 and len(ssh_user_attack) == 0:
     print "OK" #if login is successful
 else:
     print "Intrusion" #detect intrusion
-    num = 0
+    user_attacked_set = Set()
     for i in ssh_user_attack:
-        num += len(ssh_user_attack[i])
-    num += len(user_attack)
-    print (str(num)+' users might be under attack')
+        user_attacked_set = user_attacked_set|ssh_user_attack[i]    
+    for i in user_attack:
+        user_attacked_set.add(user_attack[i])
+    print (str(len(user_attacked_set))+' users might be under attack')
 #further estimate the number of users whose accounts the attacker attempted to access
