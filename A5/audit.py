@@ -3,12 +3,12 @@ from datetime import datetime
 from sets import Set
 TIME_WINDOW = 600
 SSH_TIME_WINDOW = 60 * 120
-SSH_NUM_IP = 5
+SSH_NUM_IP = 1
 LOGIN_ATTEMPT = 10
 LOGIN_ATTEMPT_ALREADY_LOGEDIN = 3
+SUDO_ATTEMPT = 5
 
 logpath = sys.argv[1]
-
 failure_time = {}
 user_attack = []
 ssh_user_attack = {}
@@ -57,15 +57,12 @@ with open(logpath, "r") as log:
             if "maximum authentication attempts exceeded" in line:
                 line_split = line.split(" ")
                 ip = line_split[line_split.index("port") - 1]
+                username = line_split[line_split.index("from") - 1]
                 if ip in ssh_user_attack:
-                    ssh_user_attack[user].add(user)
+                    ssh_user_attack[ip].add(username)
                 else:
-                    userset = Set([user])
+                    userset = set([username])
                     ssh_user_attack[ip] = userset
-                print "max", ssh_user_attack, "..........."
-            elif "Failed password" in line:
-                print "failed password"
-                    #report intrusion
             elif "port" in line and "password" in line:
                 line_split = line.split(" ")
                 ip = line_split[line_split.index("port") - 1]
@@ -88,7 +85,18 @@ with open(logpath, "r") as log:
                     ssh_user_attack[ip] = set(userlist)
                 ssh_ip_access_time[ip] = timelist
                 ssh_ip_access_user[ip] = userlist
-                print ssh_ip_access_user
+        elif "sudo" in line:
+            if "incorrect password attempts" in line:
+                line_split = line.split(" ")
+                num_incorrect = int(line_split[line_split.index("incorrect") - 1])
+                if num_incorrect > SUDO_ATTEMPT:
+                    user_index = line_split.index("sudo:") + 1
+                    while user_index < len(line_split):
+                        if line_split[user_index] == "":
+                            user_index += 1
+                        else:
+                            break
+                    user_attack.append(line_split[user_index])
         elif "session closed" in line and "sshd" not in line:
             user = line.split(" ")[-1]
             if user in login:
@@ -107,14 +115,15 @@ with open(logpath, "r") as log:
             user = line_split[line_split.index("user") + 1]
             login.append(user)
 
+###syslog format!!!
 if len(user_attack) == 0 and len(ssh_user_attack) == 0:
     print "OK" #if login is successful
 else:
     print "Intrusion" #detect intrusion
-    user_attacked_set = Set()
+    user_attacked_set = set()
     for i in ssh_user_attack:
-        user_attacked_set = user_attacked_set|ssh_user_attack[i]    
+        user_attacked_set = user_attacked_set|ssh_user_attack[i]
     for i in user_attack:
-        user_attacked_set.add(user_attack[i])
+        user_attacked_set.add(i)
     print (str(len(user_attacked_set))+' users might be under attack')
 #further estimate the number of users whose accounts the attacker attempted to access
