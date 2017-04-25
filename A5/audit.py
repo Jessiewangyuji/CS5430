@@ -28,15 +28,17 @@ with open(logpath, "r") as log:
             datetime_obj = datetime.strptime(time, "%b %d %X")
             #assumption: log file is most recent in current year
             datetime_obj = datetime_obj.replace(year = curryear)
-
+            
             if user in failure_time:
                 list = failure_time[user]
-                for i in range(0, len(list) - 1):
+                i = 0
+                while i < len(list):
                     diff = (datetime_obj - list[i]).total_seconds()
                     if diff > TIME_WINDOW: #10-minute time window
                         del list[i]
                     else:
                         break
+            
                 list.append(datetime_obj)
                 failure_time[user] = list
                 if user not in login and len(list) > LOGIN_ATTEMPT:
@@ -70,7 +72,8 @@ with open(logpath, "r") as log:
                 if ip in ssh_ip_access_time:
                     timelist = ssh_ip_access_time[ip]
                     userlist = ssh_ip_access_user[ip]
-                    for i in range(0, len(timelist) - 1):
+                    i = 0
+                    while i < len(timelist):
                         if (datetime_obj - timelist[i]).total_seconds > SSH_TIME_WINDOW:
                             del timelist[i]
                             del userlist[i]
