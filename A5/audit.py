@@ -6,13 +6,15 @@ SSH_TIME_WINDOW = 60 * 120
 SSH_NUM_IP = 1
 LOGIN_ATTEMPT = 10
 LOGIN_ATTEMPT_ALREADY_LOGEDIN = 3
-SUDO_ATTEMPT = 5
+SUDO_ATTEMPT = 2
+SSH_ATTEMPT = 5
 
 logpath = sys.argv[1]
 failure_time = {}
 user_attack = []
 ssh_user_attack = {}
 login = []
+ssh_failure = {}
 ssh_ip_access_time = {}
 ssh_ip_access_user = {}
 now = datetime.now()
@@ -22,7 +24,7 @@ with open(logpath, "r") as log:
         now = datetime.now()
         if "authentication failure" in line:
             time = line.split(" ")[0:3]
-            user = line.split(" ")[-1] #TODO:user + uid?
+            user = line.split(" ")[-1]
             user = user.split("=")[-1]
             time = ' '.join(time)
             datetime_obj = datetime.strptime(time, "%b %d %X")
@@ -65,6 +67,23 @@ with open(logpath, "r") as log:
                 else:
                     userset = set([username])
                     ssh_user_attack[ip] = userset
+            elif "Failed password" in line:
+                line_split = line.split(" ")
+                username = line_split[line_split.index("for") + 1]
+                if username in ssh_failure:
+                    timelist = ssh_failure[username]
+                    i = 0
+                    while i < len(timelist):
+                        if (datetime_obj - timelist[i]).total_seconds() > TIME_WINDOW:
+                            del timelist[i]
+                        else:
+                            break
+                else:
+                    timelist = []
+                timelist.append(datetime_obj)
+                if len(timelist) > SSH_ATTEMPT:
+                    user_attack.append(username)
+                ssh_failure[username] = timelist
             elif "port" in line and "password" in line:
                 line_split = line.split(" ")
                 ip = line_split[line_split.index("port") - 1]
@@ -74,7 +93,7 @@ with open(logpath, "r") as log:
                     userlist = ssh_ip_access_user[ip]
                     i = 0
                     while i < len(timelist):
-                        if (datetime_obj - timelist[i]).total_seconds > SSH_TIME_WINDOW:
+                        if (datetime_obj - timelist[i]).total_seconds() > SSH_TIME_WINDOW:
                             del timelist[i]
                             del userlist[i]
                         else:
