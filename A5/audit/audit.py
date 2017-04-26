@@ -1,7 +1,7 @@
 import sys
 from datetime import datetime
 from sets import Set
-TIME_WINDOW = 600
+TIME_WINDOW = 300
 DAY_WINDOW = 3600 * 24
 DAY_ATTEMPT = 15
 SSH_TIME_WINDOW = 60 * 120
@@ -63,7 +63,7 @@ with open(logpath, "r") as log:
                 while i < len(daylist):
                     diff = (datetime_obj - daylist[i]).total_seconds()
                     if diff > DAY_WINDOW:
-                        del list[i]
+                        del daylist[i]
                     else:
                         break
                 daylist.append(datetime_obj)
