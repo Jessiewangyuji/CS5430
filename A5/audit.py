@@ -137,15 +137,18 @@ with open(logpath, "r") as log:
             user = line_split[line_split.index("user") + 1]
             login.append(user)
 
-###syslog format!!!
+now = datetime.now()
+string = (str(now).split("."))[0]
+string = string + " ubuntu authAudit: "
 if len(user_attack) == 0 and len(ssh_user_attack) == 0:
-    print "OK" #if login is successful
+    string = string + "OK " #if login is successful
 else:
-    print "Intrusion" #detect intrusion
+    string = string + "Intrusion " #detect intrusion
     user_attacked_set = set()
     for i in ssh_user_attack:
         user_attacked_set = user_attacked_set|ssh_user_attack[i]
     for i in user_attack:
         user_attacked_set.add(i)
-    print (str(len(user_attacked_set))+' users might be under attack')
+    string = string + (str(len(user_attacked_set))+' users might be under attack')
+print string
 #further estimate the number of users whose accounts the attacker attempted to access
